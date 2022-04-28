@@ -11,7 +11,7 @@ const userRoute = require(__dirname + "/routes/user");
 //   await mongoose.connect("mongodb://localhost:27017/PassportTestDB");
 // };
 
-// app.use("/api", userRoute);
+app.use("/api", userRoute);
 
 // main()
 //   .then(() => {
