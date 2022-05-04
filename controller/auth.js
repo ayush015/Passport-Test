@@ -1,7 +1,7 @@
 const User = require("../model/user");
 var passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-
+const mongoose = require("mongoose");
 passport.use(
   new LocalStrategy({ usernameField: "email" }, User.authenticate())
 );
@@ -37,4 +37,35 @@ exports.signin = (req, res) => {
       return res.json({ _id, name, email });
     });
   })(req, res);
+};
+
+exports.dropDB = (req, res) => {
+  mongoose.connection.db.dropDatabase((err, result) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+        message: "There was some problem in dropping database",
+      });
+    }
+    return res.json({
+      result: result,
+      message: "DB dropped Successfully",
+    });
+  });
+};
+
+exports.dropCollection = (req, res) => {
+  const collection = req.params.collectionName;
+  mongoose.connection.db.dropCollection(`${collection}`, (err, result) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+        message: `There was some problem in dropping ${collection}`,
+      });
+    }
+    return res.json({
+      result: result,
+      message: "Collection dropped Successfully",
+    });
+  });
 };
