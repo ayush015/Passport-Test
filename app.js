@@ -21,20 +21,23 @@ const newPort = 5000;
 app.use(passport.initialize());
 app.use(passport.session());
 
-// const main = async () => {
-//   await mongoose.connect("mongodb://localhost:27017/PassportTestDB");
-// };
+const main = async () => {
+  // await mongoose.connect("mongodb://localhost:27017/PassportTestDB");
+  await mongoose.connect(
+    "mongodb+srv://AndroidTest:ayush@cluster0.uivzc.mongodb.net/passportTestDB?retryWrites=true&w=majority"
+  );
+};
 
 app.use("/api", userRoute);
-// app.use("/api", authRoute);
+app.use("/api", authRoute);
 
-// main()
-//   .then(() => {
-//     console.log(`DB connection successful`);
-//   })
-//   .catch((err) => {
-//     console.log(`There was some error ${err}`);
-//   });
+main()
+  .then(() => {
+    console.log(`DB connection successful`);
+  })
+  .catch((err) => {
+    console.log(`There was some error ${err}`);
+  });
 
 let port = process.env.PORT;
 if (port == null || port == "") {
