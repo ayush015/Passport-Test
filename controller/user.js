@@ -7,6 +7,14 @@ const users = [
     name: "Ayush Srivastava",
     email: "ayushsri@gmail.com",
   },
+  {
+    name: "Kamsera ",
+    email: "Kamsera@gmail.com",
+  },
+  {
+    name: "Khandi ",
+    email: "khandi@gmail.com",
+  },
 ];
 
 exports.user = (req, res) => {

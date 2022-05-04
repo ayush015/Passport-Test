@@ -1,17 +1,32 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
+const bodyParser = require("body-parser");
 
 const app = express();
-
-const newPort = 5000;
+const passport = require("passport");
+const session = require("express-session");
 
 const userRoute = require(__dirname + "/routes/user");
+const authRoute = require(__dirname + "/routes/auth");
+
+app.use(bodyParser.json());
+app.use(
+  session({
+    secret: "i love to hide stuff.",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+const newPort = 5000;
+app.use(passport.initialize());
+app.use(passport.session());
 
 // const main = async () => {
 //   await mongoose.connect("mongodb://localhost:27017/PassportTestDB");
 // };
 
 app.use("/api", userRoute);
+// app.use("/api", authRoute);
 
 // main()
 //   .then(() => {
@@ -25,8 +40,6 @@ let port = process.env.PORT;
 if (port == null || port == "") {
   port = 5000;
 }
-
-// app.listen(port);
 
 app.listen(port, () => {
   console.log(`Server is up and running at port ${port}`);
