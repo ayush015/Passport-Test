@@ -1,6 +1,7 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 const passport = require("passport");
@@ -8,6 +9,7 @@ const session = require("express-session");
 
 const userRoute = require(__dirname + "/routes/user");
 const authRoute = require(__dirname + "/routes/auth");
+const testRoute = require(__dirname + "/routes/test");
 
 const developmentDB = "mongodb://localhost:27017/PassportTestDB";
 const productionDB =
@@ -20,6 +22,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(cors());
 const newPort = 5000;
 app.use(passport.initialize());
 app.use(passport.session());
@@ -30,6 +33,7 @@ const main = async () => {
 
 app.use("/api", userRoute);
 app.use("/api", authRoute);
+app.use("/api", testRoute);
 
 main()
   .then(() => {
